@@ -1,0 +1,20 @@
+Package: mitoticFigureCounts
+Type: Package
+Title: Mitotic figure counts study data, functions, and markdown files (Tabata2019_Diagn-Pathol_v14p65)
+Version: 1.0
+Date: 2019-10-12
+Author: Brandon D Gallas, Kazuhiro Tabata, Qi Gong
+Maintainer: Dr. Brandon D. Gallas <brandon.gallas@fda.hhs.gov>
+Description: This package contains the data, functions, and markdown files
+ for a study comparing mitotic figure counting performances based on whole
+ slide images (WSI images) from four scanners and a microscope. The details
+ about this study are described in the following paper:
+ Tabata, K., N. Uraoka, J. Benhaminda, M. G. Hanna, S.J. Sirintrapun,
+ B. D. Gallas, Q. Gong, R. G. Aly, K. Emoto and K. M. J. D. P. Matsuda (2019).
+ "Validation of mitotic cell quantification via microscopy and
+ multiple whole-slide scanners," Diagn Pathol, 14(1): 65.
+License: CC0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Depends: R (>= 2.10)

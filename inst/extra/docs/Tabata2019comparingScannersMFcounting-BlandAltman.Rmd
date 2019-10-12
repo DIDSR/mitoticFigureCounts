@@ -1,0 +1,355 @@
+---
+title: "Bland-Altman Analysis for Tabata2019_Diagn-Pathol_v14p65"
+author: "Brandon D. Gallas"
+date: "April 2, 2019"
+output:
+  pdf_document:
+    fig_height: 7
+    fig_width: 7
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+
+# From the front matter, under html_document, I have deleted, "keep_md: yes"
+
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+```{r Initialize Data, message=FALSE}
+
+# Initialize MRMC analysis software
+library(iMRMC)
+
+# Initialize the data
+library(mitoticFigureCounts)
+
+# We know that the study has 5 participants and 157 candidate mitotic figures
+nReaders <- 5
+readers <- c("observer.1", "observer.2", "observer.3", "observer.4", "observer.5")
+nCases <- 155
+cases <- factor(1:155)
+nModalities <- 5
+modalities <- c("scanner.A", "scanner.B", "scanner.C", "scanner.D", "microscope")
+
+# Create a list-mode data frame
+inDFtype <- "matrixWithTruth"
+outDFtype <- "listWithTruth"
+nameTruth <- "truth"
+#dfCount.ListMode <- convertDF(dfCountWSI, inDFtype, outDFtype, readers, nameTruth)
+dfCount.ListMode <- convertDF(dfCountWSI20180627, inDFtype, outDFtype, readers, nameTruth)
+dfCount.ListMode$readerID <- factor(dfCount.ListMode$readerID)
+dfCount.ListMode <- renameCol(dfCount.ListMode, "wsiName", "caseID")
+
+```
+
+```{r Initialize Functions, message=FALSE}
+
+getWRBM <- function(mcsData, modality.X, modality.Y) {
+
+  # Make an "MRMClist" data frame for modality.X
+  df.x <- mcsData[mcsData$modalityID == modality.X,
+                  c("readerID", "caseID", "modalityID", "score")]
+  # Make an "MRMClist" data frame for modality.Y
+  df.y <- mcsData[mcsData$modalityID == modality.Y,
+                  c("readerID", "caseID", "modalityID", "score")]
+  # Merge the two data frames
+  df <- merge(df.x, df.y, by = c("readerID", "caseID"), suffixes = c(".X",".Y"))
+
+  main <- paste("Bland-Altman Plot:", modality.X, "vs", modality.Y, "\n N = ", nrow(df))
+  xlab <- paste("Average of", modality.X, "&", modality.Y)
+  ylab <- paste(modality.X, "minus", modality.Y)
+
+  x <- df$score.X
+  y <- df$score.Y
+  df$xyDiff <- df$score.X - df$score.Y
+  df$xyAvg <- (df$score.X + df$score.Y)/2
+
+  return(df)
+
+}
+
+mcsData0 <- dfCount.ListMode
+modality.X <- "microscope"
+modality.Y <- "microscope"
+getBRBM <- function(mcsData, modality.X, modality.Y) {
+
+  # This data frame will hold all the paired observations
+  df <- data.frame()
+  
+  # Split the data by readers
+  readers <- levels(mcsData0$readerID)
+  nReaders <- nlevels(mcsData0$readerID)
+  mcsData <- split(mcsData0, mcsData0$readerID)
+  for (reader.x in 1:(nReaders - 1)) {
+    for (reader.y in (reader.x + 1):nReaders) {
+      
+      # Grab the data frame corresponding to the i'th and j'th readers
+      mcsData.x <- mcsData[[reader.x]]
+      mcsData.y <- mcsData[[reader.y]]
+      
+      if (nrow(mcsData.x) == 0) next()
+      if (nrow(mcsData.y) == 0) next()
+      
+      # Make an "MRMClist" data frame for modality.X
+      df.x <- mcsData.x[mcsData.x$modalityID == modality.X,
+                      c("readerID", "caseID", "modalityID", "score")]
+      # Make an "MRMClist" data frame for modality.Y
+      df.y <- mcsData.y[mcsData.y$modalityID == modality.Y,
+                      c("readerID", "caseID", "modalityID", "score")]
+      # Merge the two data frames
+      df.temp <- merge(df.x, df.y, by = c("caseID"), suffixes = c(".X",".Y"))
+      
+      df <- rbind(df, df.temp)
+      
+    }
+      
+  }
+
+  return(df)
+
+}
+
+```
+
+```{r identifyCandidatesNotFoundByMicroscope, message=FALSE}
+
+# Identify the mitotic figure candidates not found by the microscope.
+# Then investigate to yield talking points for the paper
+
+dfClassify <- dfClassify20180627
+dfClassify$sumObservers <- rowSums(
+  dfClassify[ , c("observer.1", "observer.2", "observer.3", "observer.4", "observer.5")]
+)
+
+dfClassify.ByModality <- split(dfClassify, dfClassify$modalityID)
+temp.micro <- dfClassify.ByModality$microscope[dfClassify.ByModality$microscope$sumObservers == 0, ]
+candidatesNotFoundByMicroscope <- temp.micro$targetID
+
+temp.A <- dfClassify.ByModality$scanner.A[ candidatesNotFoundByMicroscope, ]
+temp.B <- dfClassify.ByModality$scanner.B[ candidatesNotFoundByMicroscope, ]
+temp.C <- dfClassify.ByModality$scanner.C[ candidatesNotFoundByMicroscope, ]
+temp.D <- dfClassify.ByModality$scanner.D[ candidatesNotFoundByMicroscope, ]
+
+```
+
+
+This document contains analysis and text for the following manuscript:
+
+* *Title: Validation of mitotic cell quantification via microscopy and multiple whole-slide scanners.*
+* First author, Kazuhiro Tabata
+
+# Methods: Bland-Altman analysis
+
+Intra-observer agreement between the scanner and microscope data was also analyzed with Bland-Altman plots and related summary statistics. For each modality we plot the differences in log counts between the paired scanner and microscope data for each pathologist against the average of each pair (citation: Bland1999_Stat-Methods-Med-Res_v8p135). The log transform stabilizes the variance in the count differences as a function of the mean (citation: Veta2016_PloS-One_v11pe0161286). The summary statistics include the mean differences in log counts and the standard deviation of the log-count differences (uncertainty). Twice the standard deviation of the log-count differences above and below the mean give the limits of agreement (LA). LA are similar to but different from confidence intervals, which typically quantify uncertainty in a mean. For this analysis, we counted all the cells marked as MFs for each reader in a WSI. This aligns with what is done in clinical practice (citation: clinical ref?). Therefore, we have four counts for each reader and modality. The uncertainties estimated in this Bland-Altman analysis account for the variability from the pathologists and the correlations that are arise when the pathologists evaluate the same cases, a so-called multi-reader multi-case analysis (citation: Gallas2007_J-Opt-Soc-Am-A_v24pB70).
+
+* Bland1999_Stat-Methods-Med-Res_v8p135: Bland, J. M. & Altman, D. G. (1999), 'Measuring Agreement in Method Comparison Studies', *Stat Methods Med Res* **8**(2), 135-160.
+* Veta2016_PloS-One_v11pe0161286: Veta, M.; van Diest, P. J.; Jiwa, M.; Al-Janabi, S. & Pluim, J. P. W. (2016), 'Mitosis counting in breast cancer: Object-level interobserver agreement and comparison to an automatic method', *PloS One* **11**(8), e0161286.
+* Gallas2007_J-Opt-Soc-Am-A_v24pB70: Gallas, B. D.; Pennello, G. A. & Myers, K. J. (2007), 'Multireader Multicase Variance Analysis for Binary Data', *J Opt Soc Am A, Special Issue on Image Quality* **24**(12), B70-B80.
+
+# Methods: Accuracy
+
+Accuracy was analyzed using the average of sensitivity and specificity, giving the 2 x 2 tables of true and false MFs vs. positive and negative determinations of all candidate MFs. Sensitivity is defined as the number of MFs detected by an observer divided by the number of true MFs. Specificity is defined as one minus the false-positive fraction, where the false-positive fraction is the number of false MFs that were positively marked, divided by the total number of false MFs. This average is equivalent to the area under the receiver operating characteristic curve for binary scores and is proportional to Youden’s index (28, 29); it is also correlated with Cohen’s Kappa (30). We reported the accuracy for each reader and modality and then the average over readers for each modality. We also performed a multiple-reader multiple-case (MRMC) analysis of reader-averaged accuracy using the Obuchowski-Rockette (OR) method (cite: Obuchowski1995_Commun-Stat-Simulat_v24p285, Hillis2014_Stat-Med_v33p330). This method takes as input the covariances between the AUCs from all the reader by modality combinations (five readers times five modalities). These covariances account for within-slide correlation between measurements obtained on ROIs within the same slide (cite: Obuchowski1997_Biometrics_v53p567, Obuchowski1997_clusteredROC_software). 
+
+Hillis, S. L. (2014), 'A marginal-mean ANOVA approach for analyzing multireader multicase radiological imaging data.', Stat Med 33(2), 330--360.
+
+Obuchowski, N. A. & Rockette, H. E. (1995), 'Hypothesis Testing of Diagnostic Accuracy for Multiple Readers and Multiple Tests: An ANOVA Approach with Dependent Observations', Commun Stat B-Simul 24(2), 285-308.
+
+Obuchowski, N. A. (1997), 'Nonparametric Analysis of Clustered ROC Curve Data', Biometrics 53(2), 567-578.
+
+Obuchowski, N. (1997), 'funcs_clusteredROC.R: Nonparametric Analysis of Clustered ROC Curve Data', Department of Quantitative Health Sciences, Lerner Research Institute, Cleveland Clinic, Silver Spring, MD. URL: https://www.lerner.ccf.org/qhs/software/roc_analysis.php, accessed 5/22/2019.
+
+\pagebreak
+
+# Results
+
+## Figure 1: "Within-Reader Log-Count Differences""
+
+```{r Bland-Altman Analyses}
+
+dfCount.ListMode$count <- dfCount.ListMode$score
+dfCount.ListMode$score <- log10(dfCount.ListMode$score)
+
+ls.countDiffs <- list(
+  getWRBM(dfCount.ListMode, "scanner.A", "microscope"),
+  getWRBM(dfCount.ListMode, "scanner.B", "microscope"),
+  getWRBM(dfCount.ListMode, "scanner.C", "microscope"),
+  getWRBM(dfCount.ListMode, "scanner.D", "microscope")
+)
+names(ls.countDiffs) <- modalities[1:4]
+
+# Do the within-reader between-modality analysis
+df.laWRBM <- rbind(
+  laWRBM(dfCount.ListMode, modalitiesToCompare = c(modalities[1], "microscope")),
+  laWRBM(dfCount.ListMode, modalitiesToCompare = c(modalities[2], "microscope")),
+  laWRBM(dfCount.ListMode, modalitiesToCompare = c(modalities[3], "microscope")),
+  laWRBM(dfCount.ListMode, modalitiesToCompare = c(modalities[4], "microscope"))
+)
+df.laWRBM$std.MeanDiff <- sqrt(df.laWRBM$var.MeanDiff)
+df.laWRBM$std.1obs <- sqrt(df.laWRBM$var.1obs)
+rownames(df.laWRBM) <- modalities[1:4]
+
+```
+
+```{r }
+
+par(mfrow = c(2,2))
+
+desc <- "A."
+i.countDiffs <- ls.countDiffs$scanner.A
+i.laWRBM <- df.laWRBM["scanner.A", ]
+doPlot <- function(desc, i.countDiffs, i.laWRBM) {
+  
+  x <- i.countDiffs$xyAvg
+  y <- i.countDiffs$xyDiff
+  main <- desc
+  xlab <- paste("Avg.", i.countDiffs$modalityID.X[1], "& Microscope (log counts)")
+  ylab <- paste(i.countDiffs$modalityID.X[1], "minus Microscope (log counts)")
+  
+  plot(x, y, main = main, type = "n",
+       xlim = c(0,1.5), ylim = c(-1, 1),
+       xlab = xlab, ylab = ylab)
+  
+  lines(c(0,5), c(0,0) + i.laWRBM$meanDiff, lty = 3)
+  lines(c(0,5), c(0,0) + i.laWRBM$meanDiff - 1.96 * i.laWRBM$std.MeanDiff, lty = 5)
+  lines(c(0,5), c(0,0) + i.laWRBM$meanDiff + 1.96 * i.laWRBM$std.MeanDiff, lty = 5)
+  lines(c(0,5), c(0,0) + i.laWRBM$meanDiff - 2 * i.laWRBM$std.1obs, lty = 1)
+  lines(c(0,5), c(0,0) + i.laWRBM$meanDiff + 2 * i.laWRBM$std.1obs, lty = 1)
+
+  text(
+    0, 0.85,
+    paste(
+      "b = ", round(i.laWRBM$meanDiff, digits = 2), ", ",
+      "LA = (", round(i.laWRBM$la.bot, digits = 2),
+      ", ", round(i.laWRBM$la.top, digits = 2),
+      ")",
+      sep = ""
+    ),
+    adj = 0
+  )
+  text(
+    0, 0.6,
+    paste(
+      "b.ratio = ", round(10^i.laWRBM$meanDiff, digits = 2), ", ",
+      "LA.ratio = (", round(10^i.laWRBM$la.bot, digits = 2),
+      ", ", round(10^i.laWRBM$la.top, digits = 2),
+      ")",
+      sep = ""
+    ),
+    adj = 0
+  )
+
+  points(i.countDiffs$xyAvg, i.countDiffs$xyDiff, pch = rep(c(1,2,3,4,6), rep(4, 5)))
+  
+}
+
+doPlot("A.", ls.countDiffs$scanner.A, df.laWRBM["scanner.A", ])
+doPlot("B.", ls.countDiffs$scanner.B, df.laWRBM["scanner.B", ])
+doPlot("C.", ls.countDiffs$scanner.C, df.laWRBM["scanner.C", ])
+doPlot("D.", ls.countDiffs$scanner.D, df.laWRBM["scanner.D", ])
+
+pdf("fig3-LogCountDifferences.pdf")
+par(mfrow = c(2,2))
+doPlot("A.", ls.countDiffs$scanner.A, df.laWRBM["scanner.A", ])
+doPlot("B.", ls.countDiffs$scanner.B, df.laWRBM["scanner.B", ])
+doPlot("C.", ls.countDiffs$scanner.C, df.laWRBM["scanner.C", ])
+doPlot("D.", ls.countDiffs$scanner.D, df.laWRBM["scanner.D", ])
+dev.off()
+
+par(mfrow = c(1,1))
+
+fig.cap <- paste(
+  "Bland-Altman plots of within-reader differences in log (base 10) counts", 
+  "between each scanner (A, B, C, D) and the microscope.",
+  "Each symbol corresponds to a different reader.",
+  "The dotted line in each plot is b, the mean difference in the log counts.",
+  "The dashed lines show the 95% MRMC confidence interval for b.",
+  "The solid lines show the MRMC limits of agreement (LA).",
+  "We map b and LA to ratios of counts with the inverse log: 10^b, 10^LA.")
+
+```
+
+**Figure 1 Caption:** `r fig.cap`
+
+\pagebreak
+
+In Fig. 1 we show the within-reader Bland Altman plots comparing log-count differences from the scanners to those with the microscope. The biases observed in the log counts show that the pathologists marked fewer MFs with the scanners compared to the microscope. They marked between 16% to 36% fewer on average and 70% fewer in some cases.
+
+```{r Table4accuracy}
+
+table4 <- data.frame(
+  'ScannerA' = aucMRMCcluster$`ScannerA`$theta.hat[2, ],
+  'ScannerB' = aucMRMCcluster$`ScannerB`$theta.hat[2, ],
+  'ScannerC' = aucMRMCcluster$`ScannerC`$theta.hat[2, ],
+  'ScannerD' = aucMRMCcluster$`ScannerD`$theta.hat[2, ],
+  
+  'Microscope' = aucMRMCcluster$`ScannerA`$theta.hat[1, ]
+)
+table4[6, ] <- c(
+  aucMRMCcluster$`ScannerA`$theta.i[2],
+  aucMRMCcluster$`ScannerB`$theta.i[2],
+  aucMRMCcluster$`ScannerC`$theta.i[2],
+  aucMRMCcluster$`ScannerD`$theta.i[2],
+  
+  aucMRMCcluster$`ScannerA`$theta.i[1]
+)
+table4[7, ] <- c(
+  aucMRMCcluster$`ScannerA`$se.i[2],
+  aucMRMCcluster$`ScannerB`$se.i[2],
+  aucMRMCcluster$`ScannerC`$se.i[2],
+  aucMRMCcluster$`ScannerD`$se.i[2],
+  
+  aucMRMCcluster$`ScannerA`$se.i[1]
+)
+table4[8, ] <- c(
+  aucMRMCcluster$`ScannerA`$botCI[2],
+  aucMRMCcluster$`ScannerB`$botCI[2],
+  aucMRMCcluster$`ScannerC`$botCI[2],
+  aucMRMCcluster$`ScannerD`$botCI[2],
+  
+  aucMRMCcluster$`ScannerA`$botCI[1]
+)
+table4[9, ] <- c(
+  aucMRMCcluster$`ScannerA`$topCI[2],
+  aucMRMCcluster$`ScannerB`$topCI[2],
+  aucMRMCcluster$`ScannerC`$topCI[2],
+  aucMRMCcluster$`ScannerD`$topCI[2],
+  
+  aucMRMCcluster$`ScannerA`$topCI[1]
+)
+table4[10, ] <- c(
+  aucMRMCcluster$`ScannerA`$p,
+  aucMRMCcluster$`ScannerB`$p,
+  aucMRMCcluster$`ScannerC`$p,
+  aucMRMCcluster$`ScannerD`$p,
+  
+  NA
+)
+rownames(table4) <- c(
+  "Observer 1",
+  "Observer 2",
+  "Observer 3",
+  "Observer 4",
+  "Observer 5",
+  "Average",
+  "SE",
+  "botCI",
+  "topCI",
+  "p-value"
+)
+
+print(round(table4, digits = 3))
+#write.csv(table4, file.path("inst", "docs", "table4.csv"))
+write.csv(table4, file.path("table4.csv"))
+
+```
+
+Table 4 footnote: Accuracy refers to the average of sensitivity and specificity. SE, standard error; CI, confidence interval. The p-value corresponds to a two-sided hypothesis test comparing reader-averaged accuracy with each scanner viewing mode to the accuracy of the microscope. The p-values of the four hypotheses are compared following the sequentially rejective Bonferroni test with alpha = 0.05 (33). Statistical significance is indicated with an asterisk *. All analyses account for the correlations and variability from the readers reading the same ROIs, and the correlations arising from MFs contained within the same slides.
+
+To compare all detected mitotic cell candidates with ground truth, we analyzed accuracy which is the average of sensitivity and specificity. Accuracy was between 0.631 and 0.842 across all readers and modes (Table 4, Figure 3). After averaging over readers for each detection method, we found (33) that mitosis detection accuracy of each of the three scanners, A, B, and C, was significantly less than that of the microscope.
+
+## Discussion
+
+One interesting finding worth investigating with a larger study is that the pathologists found fewer mitotic figures on the scanners than on the microscope.

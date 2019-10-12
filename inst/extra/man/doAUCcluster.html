@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: doAUCcluster</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for doAUCcluster {mitoticFigureCounts}"><tr><td>doAUCcluster {mitoticFigureCounts}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>doAUCcluster</h2>
+
+<h3>Description</h3>
+
+<p>Do AUC analysis of clustered data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+doAUCcluster(predictor1, predictor2 = NULL, response, clusterID,
+  alpha = 0.05, level = NULL, print.all = F)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>predictor1</code></td>
+<td>
+<p>a vector containing the predictor for ROC curve 1</p>
+</td></tr>
+<tr valign="top"><td><code>predictor2</code></td>
+<td>
+<p>a vector containing the predictor for ROC curve 2</p>
+</td></tr>
+<tr valign="top"><td><code>response</code></td>
+<td>
+<p>a vector containing the response for both ROC curves</p>
+</td></tr>
+<tr valign="top"><td><code>clusterID</code></td>
+<td>
+<p>a vector containing IDs for the clusters</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>the type I error rate</p>
+</td></tr>
+<tr valign="top"><td><code>level</code></td>
+<td>
+<p>can be used to specify the response level considered positive
+(if omitted, the second level of the response is selected)</p>
+</td></tr>
+<tr valign="top"><td><code>print.all</code></td>
+<td>
+<p>if TRUE, intermediate estimates are printed</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function is used to perform the statistical methods in:
+Obuchowski NA. &quot;Nonparametric analysis of clustered ROC curve data.&quot;
+Biometrics. 1997: 567-578.
+</p>
+<p>This file was downloaded from the Cleveland Clinic Lerner Research Institute
+Department of Quantitative Health Sciences Software web page.
+</p>
+<p>FILE: https://www.lerner.ccf.org/qhs/software/lib/funcs_clusteredROC.R
+</p>
+<p>WEBPAGE: https://www.lerner.ccf.org/qhs/software/roc_analysis.php
+</p>
+<p>iMRMC users shared the links during a discussion with questions about
+how to analyze MRMC data that was clustered.
+https://github.com/DIDSR/iMRMC/issues/147
+There is a short pdf tutorial a
+https://www.lerner.ccf.org/qhs/software/lib/clusteredROC_help.pdf.
+It exists in the inst/extra/docs folder of the repository.
+It exists in the extra/docs folder of the installed package.
+</p>
+
+
+<h3>Value</h3>
+
+<p>[list] auc, auc.se, ci.for.auc
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mitoticFigureCounts</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

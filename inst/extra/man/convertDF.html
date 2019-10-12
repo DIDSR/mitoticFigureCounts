@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: convertDF</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for convertDF {mitoticFigureCounts}"><tr><td>convertDF {mitoticFigureCounts}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>convertDF</h2>
+
+<h3>Description</h3>
+
+<p>This function converts a &quot;matrixWithTruth&quot; data frame to a &quot;listWithTruth&quot; data frame.
+The &quot;matrix&quot; part of the input data frame is understood to contain scores from readers:
+One column for each reader. Column names are the reader names. The reader names (column names) need
+to be specified in the &quot;readersVector&quot; input parameter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+convertDF(inDF, inDFtype, outDFtype, readers, nameTruth)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>inDF</code></td>
+<td>
+<p>Counting data frame: dfClassify: <code><a href="dfClassify20180627.html">dfClassify20180627</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>inDFtype</code></td>
+<td>
+<p>Type of input data frame</p>
+</td></tr>
+<tr valign="top"><td><code>outDFtype</code></td>
+<td>
+<p>Type of output data frame</p>
+</td></tr>
+<tr valign="top"><td><code>readers</code></td>
+<td>
+<p>Vector of reader IDs</p>
+</td></tr>
+<tr valign="top"><td><code>nameTruth</code></td>
+<td>
+<p>Column name of truth</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Output data frame with 11 column 
+targetID, cell.mark, wsiName, roiID, cellID.mskcc20171103, xCell, yCell, truth, modalityID, readerID, score
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+dfClassify &lt;- mitoticFigureCounts::dfClassify20180627
+readersVector &lt;- names(dfClassify)[8:12]
+nameTruth &lt;- names(dfClassify)[13]
+df.convert &lt;- convertDF(dfClassify, "matrixWithTruth", "listWithTruth", readersVector, nameTruth)
+head(dfClassify)
+head(df.convert)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mitoticFigureCounts</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

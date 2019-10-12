@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: aucMRMCcluster</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for aucMRMCcluster {mitoticFigureCounts}"><tr><td>aucMRMCcluster {mitoticFigureCounts}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>aucMRMCcluster</h2>
+
+<h3>Description</h3>
+
+<p>The results of a multi-reader multi-case (MRMC) analysis of the auc for each scanner.
+The MRMC analysis is accomplished by the OR method (Obuchowski and Rockette:
+Obuchowski1995_Commun-Stat-Simulat_v24p285). Since the data is binary,
+auc is the average of sensitivity and specificity or half of (Youden's index + 1).
+Sensitivity is defined as the number of MFs 
+detected by an observer divided by the number of true MFs. 
+Specificity is defined as one minus the false-positive fraction, 
+where the false-positive fraction is the number of false MFs that were positively marked, 
+divided by the total number of false MFs.
+Furthermore, we account for the fact that there are multiple observations 
+per case (multiple ROIs per WSI, clustered data: Obuchowski1997_Biometrics_v53p567) 
+when calculating the reader by modality covariances that are used in the OR method.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+aucMRMCcluster
+</pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>list</code> of length 4.</p>
+
+
+<h3>Details</h3>
+
+<p>The results of this script are a list of MRMC AUC analysis results for 4 scanners.
+</p>
+
+<ul>
+<li><p> Scanner.A,
+</p>
+</li>
+<li><p> Scanner.B, 
+</p>
+</li>
+<li><p> Scanner.C, 
+</p>
+</li>
+<li><p> Scanner.D
+</p>
+</li></ul>
+
+<p>Each scanner results is itself a list contains the MRMC analysis results
+for the null hypothesis that the scanner accuracy is the same as the microscope accuracy:
+</p>
+
+<ul>
+<li> <p><code>F_stat</code>, F-statistic
+</p>
+</li>
+<li> <p><code>df.H</code>, Degrees of freedom
+</p>
+</li>
+<li> <p><code>p</code>, p-value
+</p>
+</li>
+<li> <p><code>theta.i</code>, [2] Accuracy of the microscope and scanner
+</p>
+</li>
+<li> <p><code>df.sgl</code>, [2] Degrees of freedom for the microscope and the scanner
+</p>
+</li>
+<li> <p><code>se.i</code>, [2] Standard error of the microscope and scanner accuracy
+</p>
+</li>
+<li> <p><code>se.dif</code>, Standard erro of the microscope and scanner accuracy difference 
+</p>
+</li>
+<li> <p><code>covOR</code>, [12] Obuchowski and Rockette covariances:
+varR, varTR, cov1, cov2, cov3, varE, varR.1, varR.2, cov2.1, cov2.2, varE.1, varE.2
+</p>
+</li>
+<li> <p><code>theta.hat</code>, [2x5] Accuracy of each reader for the microscope (row 1)
+and accuracy of each reader for the scanner (row 2)
+</p>
+</li>
+<li> <p><code>cov.hat</code>, [10x10] Reader by modality (microscope and scanner) covariance matrix
+</p>
+</li>
+<li> <p><code>botCI</code>, [2] Bottom 95
+</p>
+</li>
+<li> <p><code>topCI</code>, [2] Top 95
+</p>
+</li></ul>
+
+<p>#' The analysis results are used to produce:
+</p>
+
+<ul>
+<li><p>Table 4: Accuracy for all readers and observation methods
+</p>
+</li>
+<li><p>Figure 3: Accuracy (average of sensitivity and specificity) for each viewing mode 
+averaged over all the readers with 95
+The asterisks indicate that the difference in accuracy of the viewing mode
+compared to that of microscopy is statistically significant. 
+All analyses account for the correlations and variability from the readers 
+reading the same ROIs.
+</p>
+</li></ul>
+
+
+<hr /><div style="text-align: center;">[Package <em>mitoticFigureCounts</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

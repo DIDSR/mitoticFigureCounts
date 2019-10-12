@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: dfClassify20180627</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for dfClassify20180627 {mitoticFigureCounts}"><tr><td>dfClassify20180627 {mitoticFigureCounts}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>dfClassify20180627</h2>
+
+<h3>Description</h3>
+
+<p>A single data frame of the study data.
+Each row corresponds to a candidate mitotic figure and modality
+(155 candidates * 5 modalities = 775 rows)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+dfClassify20180627
+</pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>data.frame</code> with 775 rows and 14 columns.</p>
+
+
+<h3>Details</h3>
+
+<p>A data frame with 14 columns:
+</p>
+
+<ul>
+<li> <p><code>targetID</code> [Factor] Target cell ID = (candidate mitotic figure ID)
+</p>
+</li>
+<li> <p><code>cell.mark</code> [Factor] ROI ID, &quot;dash&quot;, Cell ID in the ROI
+</p>
+</li>
+<li> <p><code>wsiName</code> [Factor] WSI file name
+</p>
+</li>
+<li> <p><code>roiID</code> [Factor] ROI ID
+</p>
+</li>
+<li> <p><code>cellID.mskcc20171103</code> [Factor] Descriptive target cell ID,
+including ROI ID, WSI file name, x position of target cell, y position of target cell
+</p>
+</li>
+<li> <p><code>xCell</code> [Factor] x position of target cell
+</p>
+</li>
+<li> <p><code>yCell</code> [Factor] y position of target cell
+</p>
+</li>
+<li> <p><code>observer.1</code> [num] Observer1 modality-specific decision on the candidate MF
+</p>
+</li>
+<li> <p><code>observer.2</code> [num] Observer2 modality-specific decision on the candidate MF
+</p>
+</li>
+<li> <p><code>observer.3</code> [num] Observer3 modality-specific decision on the candidate MF
+</p>
+</li>
+<li> <p><code>observer.4</code> [num] Observer4 modality-specific decision on the candidate MF
+</p>
+</li>
+<li> <p><code>observer.5</code> [num] Observer5 modality-specific decision on the candidate MF
+</p>
+</li>
+<li> <p><code>truth</code> [num] Truth panel decision on the candidate MF
+</p>
+</li>
+<li> <p><code>modalityID</code> [Factor] modality ID (scanner or microscope)
+</p>
+</li></ul>
+
+<p>Some of this data is missing location information.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mitoticFigureCounts</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

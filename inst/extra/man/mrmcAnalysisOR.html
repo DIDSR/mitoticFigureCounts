@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: MRMC analysis by Obuchowski and Rockette (...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mrmcAnalysisOR {mitoticFigureCounts}"><tr><td>mrmcAnalysisOR {mitoticFigureCounts}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>MRMC analysis by Obuchowski and Rockette ( Obuchowski1995_Commun-Stat-Simulat_v24p285)</h2>
+
+<h3>Description</h3>
+
+<p>OR's method to estimate the MRMC variance for a given theta.
+This function requires an nModalities by nReaders covariance matrix to estimate
+covOR = (cov1, cov2, cov3), as described by Hillis (2014, SIM, Section 2.2)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mrmcAnalysisOR(theta.hat, cov.hat, sgl = "corres")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>theta.hat</code></td>
+<td>
+<p>[2, nReaders]: Performance estimates for two modalities by all readers</p>
+</td></tr>
+<tr valign="top"><td><code>cov.hat</code></td>
+<td>
+<p>[2 * nReaders, 2 * nReaders]: Covariance matrix between each reader x modality</p>
+</td></tr>
+<tr valign="top"><td><code>sgl</code></td>
+<td>
+<p>ch: Flat indicating whether or not to do single modality analysis only using single modality data</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>list
+$ F             : F statistic
+$ df.H          : degrees of freedom difference of concordance
+$ p             : P value
+$ se.dif        : difference of variance
+$ theta.i   [2] : reader-averaged HarrellsC form modality A &amp; B
+$ df.sgl    [2] : degrees of freedom for modality A &amp; B
+$ se.i      [2] : Variance form modality A &amp; B
+$ covOR     [6] : Components of variance of the Obuchowski and Rockette method
+cov1, cov2(pooled over modalities), cov3,
+varC, cov2(modalityA only), cov2(modalityB only)
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mitoticFigureCounts</em> version 1.0 <a href="00Index.html">Index</a>]</div>
+</body></html>
