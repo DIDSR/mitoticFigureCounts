@@ -1,11 +1,11 @@
 # mitoticFigureCounts
 
-The [Mitotic Figure Counts repository](https://github.com/DIDSR/RDataPackages/tree/master/mitoticFigureCounts) contains the data, functions, and markdown files for a study comparing mitotic figure counting performance based on whole slide images (WSI images) from four scanners to the counts from a miscroscope.
+The [Mitotic Figure Counts repository](https://github.com/DIDSR/mitoticFigureCounts/tree/master) contains the data, functions, and markdown files for a study comparing mitotic figure counting performance based on whole slide images (WSI images) from four scanners to the counts from a miscroscope.
 
 Please cite the following article if data from this repository are used for your research. The article contains the details about this study.
 * _Citation_: Tabata, K., N. Uraoka, J. Benhamida, M. G. Hanna, S. J. Sirintrapun, B. D. Gallas, Q. Gong, R. G. Aly, K. Emoto and K. M. J. D. P. Matsuda (2019). "Validation of mitotic cell quantification via microscopy and multiple whole-slide scanners."  14(1): 65.
 
-All materials may be downloaded from [this repository](https://github.com/DIDSR/RDataPackages/tree/master/mitoticFigureCounts), the [release page](https://github.com/DIDSR/mitoticFigureCounts/releases), or as an R package.
+All materials may be downloaded from [this repository](https://github.com/DIDSR/mitoticFigureCounts/tree/master), the [release page](https://github.com/DIDSR/mitoticFigureCounts/releases), or as an R package.
 * [R package for download (source) - mitoticFigureCounts_1.0.tar.gz.](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/mitoticFigureCounts_1.0.tar.gz)
 * [R package for download (binary) - mitoticFigureCounts_1.0.zip.](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/mitoticFigureCounts_1.0.zip)
 
