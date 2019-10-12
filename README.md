@@ -28,15 +28,15 @@ All materials may be downloaded from this repository, or as an R package.
 
 #### [dfClassify.csv](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/dfClassify20180627.csv)
 
-A single data frame of the study data. Each row corresponds to a candidate mitotic figure and modality (155 candidates x 5 modalities = 775 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](link to corresponding documentation html) for more details.
+A single data frame of the study data. Each row corresponds to a candidate mitotic figure and modality (155 candidates x 5 modalities = 775 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](https://didsr.github.io/mitoticFigureCounts/inst/extra/man/dfClassify20180627.html) for more details.
 
 #### [dfCountROI.csv](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/dfCountROI20180627.csv)
 
-A single data frame of the mitotic figure counts per ROI and modality (40 ROIs x 5 modalities = 200 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](link to corresponding documentation html) for more details.
+A single data frame of the mitotic figure counts per ROI and modality (40 ROIs x 5 modalities = 200 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](https://didsr.github.io/mitoticFigureCounts/) for more details.
 
 #### [dfCountWSI.csv](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/dfCountWSI20180627.csv)
 
-A single data frame of the mitotic figure counts per WSI and modality (4 WSIs x 5 modalities = 20 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](link to corresponding documentation html) for more details.
+A single data frame of the mitotic figure counts per WSI and modality (4 WSIs x 5 modalities = 20 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](https://didsr.github.io/mitoticFigureCounts/) for more details.
 
 ## Additional Assets
 
@@ -45,10 +45,10 @@ A single data frame of the mitotic figure counts per WSI and modality (4 WSIs x 
 In this script we do an multi-reader multi-case (MRMC) analysis of the auc for each scanner. The MRMC analysis is accomplished by the OR method (Obuchowski and Rockette: Obuchowski1995_Commun-Stat-Simulat_v24p285). Since the data is binary, auc is the average of sensitivity and specificity or half of (Youden's index + 1). Sensitivity is defined as the number of MFs detected by an observer divided by the number of true MFs. Specificity is defined as one minus the false-positive fraction, where the false-positive fraction is the number of false MFs that were positively marked, divided by the total number of false MFs. Furthermore, we account for the fact that there are multiple observations per case (multiple ROIs per WSI) when calculating the reader by modality covariances that are used in the OR method (clustered data: Obuchowski1997_Biometrics_v53p567).
 
 The script produces an R object '''aucMRMCcluster''' (a list of analyis results, 
-[Documentation](link to corresponding documentation html)). The analysis results are used to produce:
+[Documentation](https://didsr.github.io/mitoticFigureCounts/)). The analysis results are used to produce:
 * Table 4 of the Tabata paper: Accuracy for all readers and observation methods
 * Figure 3 of the Tabata paper: Accuracy (average of sensitivity and specificity) for each viewing mode averaged over all the readers with 95% confidence intervals. The asterisks indicate that the difference in accuracy of the viewing mode compared to that of microscopy is statistically significant. All analyses account for the correlations and variability from the readers reading the same ROIs.
 
-#### R markdown file: [Tabata2019comparingScannersMFcounting-BlandAltman.Rmd](https://github.com/DIDSR/mitoticFigureCounts/raw/master/inst/extra/docs/Tabata2019comparingScannersMFcounting-BlandAltman.Rmd), [PDF](https://didsr.github.io/inst/extra/docs/Tabata2019comparingScannersMFcounting-BlandAltman.pdf)
+#### R markdown file: [Tabata2019comparingScannersMFcounting-BlandAltman.Rmd](https://github.com/DIDSR/mitoticFigureCounts/raw/master/inst/extra/docs/Tabata2019comparingScannersMFcounting-BlandAltman.Rmd), [PDF](https://didsr.github.io/mitoticFigureCounts/inst/extra/docs/Tabata2019comparingScannersMFcounting-BlandAltman.pdf)
 
 This R-markdown file combines text and R statistical analysis code for the Bland-Altman analysis and accuracy assessment performed in the paper. Both of these are MRMC analyses. The Bland-Altman analsysis makes use of U-statistics of degree 1,1 (One reader and one case). The U-statistics tools are found in the iMRMC package ([CRAN package](https://cran.r-project.org/web/packages/iMRMC/index.html), [GitHub repository](https://github.com/DIDSR/iMRMC))
