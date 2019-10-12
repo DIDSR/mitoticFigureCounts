@@ -26,15 +26,15 @@ All materials may be downloaded from this repository, or as an R package.
 
 ## Main Assets
 
-#### [dfClassify.csv](link to csv on asset page)
+#### [dfClassify.csv](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/dfClassify20180627.csv)
 
 A single data frame of the study data. Each row corresponds to a candidate mitotic figure and modality (155 candidates x 5 modalities = 775 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](link to corresponding documentation html) for more details.
 
-#### [dfCountROI.csv](link to csv on asset page)
+#### [dfCountROI.csv](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/dfCountROI20180627.csv)
 
 A single data frame of the mitotic figure counts per ROI and modality (40 ROIs x 5 modalities = 200 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](link to corresponding documentation html) for more details.
 
-#### [dfCountWSI.csv](link to csv on asset page)
+#### [dfCountWSI.csv](https://github.com/DIDSR/mitoticFigureCounts/releases/download/1.0/dfCountWSI20180627.csv)
 
 A single data frame of the mitotic figure counts per WSI and modality (4 WSIs x 5 modalities = 20 rows). There is a column for each observer and the truth. This data is also included as an R object (data frame) in the R package. See [Documentation](link to corresponding documentation html) for more details.
 
