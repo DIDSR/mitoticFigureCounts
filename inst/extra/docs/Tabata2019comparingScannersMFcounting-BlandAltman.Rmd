@@ -138,8 +138,7 @@ temp.D <- dfClassify.ByModality$scanner.D[ candidatesNotFoundByMicroscope, ]
 
 This document contains analysis and text for the following manuscript:
 
-* *Title: Validation of mitotic cell quantification via microscopy and multiple whole-slide scanners.*
-* First author, Kazuhiro Tabata
+* Tabata, K.; Uraoka, N.; Benhamida, J.; Hanna, M. G.; Sirintrapun, S. J.; Gallas, B. D.; Gong, Q.; Aly, R. G.; Emoto, K.; Matsuda, K. M.; Hameed, M. R.; Klimstra, D. S. & Yagi, Y. (2019), 'Validation of mitotic cell quantification via microscopy and multiple whole-slide scanners.', *Diagn Pathol* **14**, 65.
 
 # Methods: Bland-Altman analysis
 
