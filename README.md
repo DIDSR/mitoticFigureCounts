@@ -41,12 +41,15 @@ A single data frame of the mitotic figure counts per WSI and modality (4 WSIs x 
 
 ## Additional Assets
 
-#### R stat script: [05_doMRMCaucORcluster.R](https://github.com/DIDSR/mitoticFigureCounts/raw/master/inst/extra/docs/05_doMRMCaucORcluster.R)
+#### R stat script: [05_doMRMCaucORcluster.R](https://github.com/DIDSR/mitoticFigureCounts/raw/master/inst/extra/docs/05_doMRMCaucORcluster.R) produces aucMRMCcluster an R list of analysis results [Documentation](https://didsr.github.io/mitoticFigureCounts/inst/extra/man/aucMRMCcluster.html)
 
-In this script we do an multi-reader multi-case (MRMC) analysis of the auc for each scanner. The MRMC analysis is accomplished by the OR method (Obuchowski and Rockette: Obuchowski1995_Commun-Stat-Simulat_v24p285). Since the data is binary, auc is the average of sensitivity and specificity or half of (Youden's index + 1). Sensitivity is defined as the number of MFs detected by an observer divided by the number of true MFs. Specificity is defined as one minus the false-positive fraction, where the false-positive fraction is the number of false MFs that were positively marked, divided by the total number of false MFs. Furthermore, we account for the fact that there are multiple observations per case (multiple ROIs per WSI) when calculating the reader by modality covariances that are used in the OR method (clustered data: Obuchowski1997_Biometrics_v53p567).
 
-The script produces an R object '''aucMRMCcluster''' (a list of analyis results, 
-[Documentation](https://didsr.github.io/mitoticFigureCounts/inst/extra/man/aucMRMCcluster.html)). The analysis results are used to produce:
+In this script we do an multi-reader multi-case (MRMC) analysis of the auc for each scanner. The MRMC analysis is accomplished by the OR method (Obuchowski and Rockette: Obuchowski1995_Commun-Stat-Simulat_v24p285). 
+The function used is [mrmcAnalysisOR](https://didsr.github.io/mitoticFigureCounts/inst/extra/man/mrmcAnalysisOR.html).
+Since the data is binary, auc is the average of sensitivity and specificity or half of (Youden's index + 1). Sensitivity is defined as the number of MFs detected by an observer divided by the number of true MFs. Specificity is defined as one minus the false-positive fraction, where the false-positive fraction is the number of false MFs that were positively marked, divided by the total number of false MFs. Furthermore, we account for the fact that there are multiple observations per case (multiple ROIs per WSI) when calculating the reader by modality covariances that are used in the OR method (clustered data: Obuchowski1997_Biometrics_v53p567).
+The function used is [doAUCcluster](https://didsr.github.io/mitoticFigureCounts/inst/extra/man/doAUCcluster.html).
+
+The '''aucMRMCcluster''' analysis results are used to produce:
 * Table 4 of the Tabata paper: Accuracy for all readers and observation methods
 * Figure 3 of the Tabata paper: Accuracy (average of sensitivity and specificity) for each viewing mode averaged over all the readers with 95% confidence intervals. The asterisks indicate that the difference in accuracy of the viewing mode compared to that of microscopy is statistically significant. All analyses account for the correlations and variability from the readers reading the same ROIs.
 
