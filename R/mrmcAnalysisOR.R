@@ -11,16 +11,20 @@
 #' @param sgl ch: Flat indicating whether or not to do single modality analysis only using single modality data
 #'
 #' @return  list
-#'           $ F             : F statistic
-#'           $ df.H          : degrees of freedom difference of concordance
-#'           $ p             : P value
-#'           $ se.dif        : difference of variance
-#'           $ theta.i   [2] : reader-averaged HarrellsC form modality A & B
-#'           $ df.sgl    [2] : degrees of freedom for modality A & B
-#'           $ se.i      [2] : Variance form modality A & B
-#'           $ covOR     [6] : Components of variance of the Obuchowski and Rockette method
-#'                               cov1, cov2(pooled over modalities), cov3,
-#'                               varC, cov2(modalityA only), cov2(modalityB only)
+#' \itemize{
+#'   \item  \code{F}             : F statistic
+#'   \item  \code{df.H}          : degrees of freedom difference of concordance
+#'   \item  \code{p}             : P value
+#'   \item  \code{se.dif}        : difference of variance
+#'   \item  \code{theta.i}   [2] : reader-averaged HarrellsC form modality A & B
+#'   \item  \code{df.sgl}    [2] : degrees of freedom for modality A & B
+#'   \item  \code{se.i}      [2] : Variance form modality A & B
+#'   \item  \code{covOR}     [6] : Components of variance of the Obuchowski and Rockette method
+#'   \itemize{
+#'     \item                           cov1, cov2(pooled over modalities), cov3,
+#'     \item                           varC, cov2(modalityA only), cov2(modalityB only)
+#'   }
+#' }
 #'
 #' @export
 #'

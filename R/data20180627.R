@@ -79,7 +79,9 @@
 #' @description
 #' The results of a multi-reader multi-case (MRMC) analysis of the auc for each scanner.
 #' The MRMC analysis is accomplished by the OR method (Obuchowski and Rockette:
-#' Obuchowski1995_Commun-Stat-Simulat_v24p285). Since the data is binary,
+#' Obuchowski1995_Commun-Stat-Simulat_v24p285). 
+#' The function used is \code{\link{mrmcAnalysisOR}}.
+#' Since the data is binary,
 #' auc is the average of sensitivity and specificity or half of (Youden's index + 1).
 #' Sensitivity is defined as the number of MFs 
 #' detected by an observer divided by the number of true MFs. 
@@ -89,6 +91,7 @@
 #' Furthermore, we account for the fact that there are multiple observations 
 #' per case (multiple ROIs per WSI, clustered data: Obuchowski1997_Biometrics_v53p567) 
 #' when calculating the reader by modality covariances that are used in the OR method.
+#' The function used is \code{\link{doAUCcluster}}
 #' 
 #' @details 
 #' 

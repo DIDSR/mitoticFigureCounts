@@ -23,25 +23,27 @@ getAUC = function(Xs, Ys) {
 #### doAUCcluster ####
 #' doAUCcluster
 #'
-#' @description Do AUC analysis of clustered data
+#' @description Do AUC analysis of clustered data.
 #'
-#' @details This function is used to perform the statistical methods in:
+#' This function is based on the analysis described in:
 #' Obuchowski NA. "Nonparametric analysis of clustered ROC curve data."
 #' Biometrics. 1997: 567-578.
 #'
-#' This file was downloaded from the Cleveland Clinic Lerner Research Institute
+#' This function is an adaptation of a function downloaded from the
+#' Cleveland Clinic Lerner Research Institute
 #' Department of Quantitative Health Sciences Software web page.
 #' 
-#' FILE: https://www.lerner.ccf.org/qhs/software/lib/funcs_clusteredROC.R
+#' FILE: \url{https://www.lerner.ccf.org/qhs/software/lib/funcs_clusteredROC.R}
 #' 
-#' WEBPAGE: https://www.lerner.ccf.org/qhs/software/roc_analysis.php
+#' WEBPAGE: \url{https://www.lerner.ccf.org/qhs/software/roc_analysis.php}
 #'
+#' @details 
 #' iMRMC users shared the links during a discussion with questions about
 #' how to analyze MRMC data that was clustered.
-#' https://github.com/DIDSR/iMRMC/issues/147
+#' \url{https://github.com/DIDSR/iMRMC/issues/147}
 #
 #' There is a short pdf tutorial a
-#' https://www.lerner.ccf.org/qhs/software/lib/clusteredROC_help.pdf.
+#' \url{https://www.lerner.ccf.org/qhs/software/lib/clusteredROC_help.pdf.}
 #' It exists in the inst/extra/docs folder of the repository.
 #' It exists in the extra/docs folder of the installed package.
 #'
