@@ -10,7 +10,8 @@ Description: This package contains the data, functions, and markdown files
  slide images (WSI images) from four scanners and a microscope. The details
  about this study are described in the following paper:
  Tabata, K., N. Uraoka, J. Benhaminda, M. G. Hanna, S.J. Sirintrapun,
- B. D. Gallas, Q. Gong, R. G. Aly, K. Emoto and K. M. J. D. P. Matsuda (2019).
+ B. D. Gallas, Q. Gong, R. G. Aly, K. Emoto, K. M. Matsuda, M. R. Hameed,
+ D. S. Klimstra, and Y. Yagi (2019).
  "Validation of mitotic cell quantification via microscopy and
  multiple whole-slide scanners," Diagn Pathol, 14(1): 65.
 License: CC0
