@@ -1,7 +1,7 @@
 # Supplementary Material for, "Validation of mitotic cell quantification via microscopy and multiple whole-slide scanners"
 #### A GitHub repository and R package called "mitoticFigureCounts"
 
-The [Mitotic Figure Counts repository](https://github.com/DIDSR/mitoticFigureCounts/tree/master) contains the data, functions, and markdown files for a study comparing mitotic figure counting performance based on whole slide images (WSI images) from four scanners to the counts from a miscroscope.
+The [Mitotic Figure Counts repository](https://github.com/DIDSR/mitoticFigureCounts/tree/master) contains the data, functions, and markdown files for a study comparing mitotic figure counting performance based on whole slide images (WSI images) from four scanners to the counts from a microscope.
 
 Please cite the following article if data from this repository are used for your research. The article contains the details about this study.
 * _Citation_: Tabata, K., N. Uraoka, J. Benhamida, M. G. Hanna, S. J. Sirintrapun, B. D. Gallas, Q. Gong, R. G. Aly, K. Emoto, K. M. Matsuda, M. R. Hameed, D. S. Klimstra, and Y. Yagi (2019). "Validation of mitotic cell quantification via microscopy and multiple whole-slide scanners." _Diagn Pathol_, 14(1): 65.
