@@ -3,6 +3,7 @@ title: "Bland-Altman Analysis for Tabata2019_Diagn-Pathol_v14p65"
 author: "Brandon D. Gallas"
 date: "April 2, 2019"
 output:
+  word_document: default
   pdf_document:
     fig_height: 7
     fig_width: 7
@@ -71,18 +72,15 @@ getWRBM <- function(mcsData, modality.X, modality.Y) {
 
 }
 
-mcsData0 <- dfCount.ListMode
-modality.X <- "microscope"
-modality.Y <- "microscope"
 getBRBM <- function(mcsData, modality.X, modality.Y) {
 
   # This data frame will hold all the paired observations
   df <- data.frame()
   
   # Split the data by readers
-  readers <- levels(mcsData0$readerID)
-  nReaders <- nlevels(mcsData0$readerID)
-  mcsData <- split(mcsData0, mcsData0$readerID)
+  readers <- levels(mcsData$readerID)
+  nReaders <- nlevels(mcsData$readerID)
+  mcsData <- split(mcsData, mcsData$readerID)
   for (reader.x in 1:(nReaders - 1)) {
     for (reader.y in (reader.x + 1):nReaders) {
       
