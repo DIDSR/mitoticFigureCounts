@@ -44,7 +44,7 @@ for (i in 1:(nModalities*nReaders)) {
       predictor1 = df.merge$decision.x,
       predictor2 = df.merge$decision.y,
       response   = df.merge$truth.x,
-      clusterID  = df.merge$caseID.x,
+      clusterID  = df.merge$wsiName.x,
       alpha      = 0.05)
 
     cov[i,j] <- (result$auc.var.A + result$auc.var.B
